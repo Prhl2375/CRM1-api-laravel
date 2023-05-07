@@ -19,15 +19,10 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 
-Route::middleware(['auth:sanctum', 'role'])->get('/users', function (){
+Route::middleware(['auth:sanctum', 'role'])->get('/users', [\App\Http\Controllers\UserController::class, 'showAction']);
 
 
-    $users = (object)[
-        'data' => \App\Models\User::all(),
-        'columns' => \Illuminate\Support\Facades\Schema::getColumnListing('users')
-    ];
-    return $users;
-});
+Route::middleware(['auth:sanctum', 'role'])->delete('/users/{id}', [\App\Http\Controllers\UserController::class, 'destroyAction']);
 
 
 Route::get('/test-auth', function (Request $request){
